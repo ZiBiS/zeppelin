@@ -391,7 +391,11 @@ public class LdapRealm extends JndiLdapRealm {
 
             // If group search filter is defined in Shiro config, then use it
             if (groupSearchFilter != null) {
-              searchFilter = expandTemplate(groupSearchFilter, userName);
+              if (memberAttribute.equalsIgnoreCase("member")){
+                searchFilter = expandTemplate(groupSearchFilter, userDn);
+              } else {
+                searchFilter = expandTemplate(groupSearchFilter, userName);
+              }
               //searchFilter = String.format("%1$s", groupSearchFilter);
             }
             if (log.isDebugEnabled()) {
